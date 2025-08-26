@@ -8,10 +8,19 @@ runs:
     - name: Checkout source
       uses: cloudbees-io/checkout@v1
 
-    - name: Run Tests
+    - name: Locate go.mod and run tests
       uses: docker://golang:1.20.3-alpine3.17
       shell: sh
       run: |
-        echo "Running tests..."
+        echo "Searching for go.mod file..."
+        GO_MOD_PATH=$(find . -name "go.mod" | head -n 1)
+        if [ -z "$GO_MOD_PATH" ]; then
+          echo "❌ go.mod not found in repository"
+          exit 1
+        fi
+        APP_DIR=$(dirname "$GO_MOD_PATH")
+        echo "✅ go.mod found in $APP_DIR"
+        cd "$APP_DIR"
+        echo "Running tests in $(pwd)..."
         go test ./... -v
-        echo "Tests completed successfully."
+        echo "✅ Tests completed successfully."
