@@ -8,17 +8,17 @@ on:
 jobs:
   build:
     steps:
-      - name: Run Build Delegate
+      - name: Build Step
         uses: ./delegates/build
 
   test:
     needs: [build]
     steps:
-      - name: Run Test Delegate
+      - name: Test Step
         uses: ./delegates/test
 
   deploy:
     needs: [test]
     steps:
-      - name: Run Deploy Delegate
+      - name: Deploy Step
         uses: ./delegates/deploy
