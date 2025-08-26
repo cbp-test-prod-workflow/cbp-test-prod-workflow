@@ -5,6 +5,9 @@ description: Run Go tests
 runs:
   using: composite
   steps:
+    - name: Checkout source
+      uses: cloudbees-io/checkout@v1
+
     - name: Run Tests
       uses: docker://golang:1.20.3-alpine3.17
       shell: sh
