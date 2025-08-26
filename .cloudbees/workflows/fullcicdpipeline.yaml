@@ -1,0 +1,24 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: FullCICDPipeline
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    steps:
+      - name: Build Step
+        uses: ./delegates/build
+
+  test:
+    needs: [build]
+    steps:
+      - name: Test Step
+        uses: ./delegates/test
+
+  deploy:
+    needs: [test]
+    steps:
+      - name: Deploy Step
+        uses: ./delegates/deploy
