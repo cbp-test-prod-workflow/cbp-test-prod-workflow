@@ -1,15 +1,15 @@
 apiVersion: automation.cloudbees.io/v1alpha1
-kind: workflow
-name: BuildDelegate
-
-jobs:
-  build-job:
-    steps:
-      - name: Build Application
-        uses: docker://golang:1.20.3-alpine3.17
-        shell: sh
-        run: |
-          echo "Starting build process..."
-          go mod tidy
-          go build -o app
-          echo "Build completed successfully."
+kind: action
+name: BuildAction
+description: Build the Go application
+runs:
+  using: composite
+  steps:
+    - name: Build Application
+      uses: docker://golang:1.20.3-alpine3.17
+      shell: sh
+      run: |
+        echo "Starting build process..."
+        go mod tidy
+        go build -o app
+        echo "Build completed successfully."
