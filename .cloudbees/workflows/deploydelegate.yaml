@@ -1,17 +1,15 @@
 apiVersion: automation.cloudbees.io/v1alpha1
-kind: workflow
-name: DeployDelegate
-
-jobs:
-  deploy-job:
-    steps:
-      - name: Deploy Application
-        uses: docker://alpine:3.17
-        shell: sh
-        run: |
-          echo "Deploying application..."
-          # Example deploy logic
-          # scp app user@server:/opt/app/
-          # ssh user@server 'systemctl restart app'
-          echo "Deployment successful."
+kind: action
+name: DeployAction
+description: Deploy application
+runs:
+  using: composite
+  steps:
+    - name: Deploy Application
+      uses: docker://alpine:3.17
+      shell: sh
+      run: |
+        echo "Deploying application..."
+        # Deployment logic here
+        echo "Deployment successful."
 
